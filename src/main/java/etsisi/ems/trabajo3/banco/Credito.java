@@ -6,15 +6,15 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 
 public class Credito {
-public Cuenta mCuentaAsociada;
-protected double mCredito;
-protected Vector<Movimiento> mMovimientos;
-String mNumero, mTitular;
-LocalDate mFechaDeCaducidad;
-public String mNombreEntidad;
-public int mCCV;
-public int mMarcaInternacional; //mastercard, maestro, visa ...
-public int mTipo; //oro platino clásica
+private Cuenta mCuentaAsociada;
+private protected double mCredito;
+private protected Vector<Movimiento> mMovimientos;
+private String mNumero, mTitular; // ### NO SE USA ###
+private LocalDate mFechaDeCaducidad; // ### NO SE USA ###
+private String mNombreEntidad; // ### NO SE USA ###
+private int mCCV; // ### NO SE USA ###
+private int mMarcaInternacional; //mastercard, maestro, visa ...
+private int mTipo; //oro platino clásica
 
 
 public Credito(String numero, String titular, LocalDate fechacaducidad, double credito, int marcainternacional,	String nombreentidad, int ccv) {

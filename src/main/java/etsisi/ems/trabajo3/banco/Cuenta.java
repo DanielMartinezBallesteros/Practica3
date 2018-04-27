@@ -6,9 +6,9 @@ import java.util.Date;
 import java.util.Vector;
 
 public class Cuenta {
-	protected String mNumero;
-	protected String mTitular;
-	protected Vector<Movimiento> mMovimientos;
+	private protected String mNumero; // ### NO SE USA ###
+	private protected String mTitular; // ### NO SE USA ###
+	private protected Vector<Movimiento> mMovimientos;
 
 	public Cuenta(String numero, String titular) {
 		mNumero = numero;

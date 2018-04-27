@@ -3,9 +3,9 @@ package etsisi.ems.trabajo3.banco;
 import java.time.LocalDate;
 
 public class Debito  {
-	public Cuenta mCuentaAsociada;
-	String mNumero, mTitular;
-	LocalDate mFechaDeCaducidad;
+	private Cuenta mCuentaAsociada;
+	private String mNumero, mTitular; // ### NO SE USA ###
+	private LocalDate mFechaDeCaducidad;// ### NO SE USA ###
 	
 	public Debito(String numero, String titular, LocalDate fechaCaducidad) {
 		mNumero = numero;
