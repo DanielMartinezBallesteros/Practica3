@@ -16,7 +16,6 @@ public class Credito {
     private int mMarcaInternacional; //mastercard, maestro, visa ...
     private int mTipo; //oro platino clásica
 
-
     public Credito(String numero, String titular, LocalDate fechacaducidad, double credito, int marcainternacional,	String nombreentidad, int ccv) {
         mNumero = numero;
         mTitular = titular;
@@ -169,9 +168,61 @@ public class Credito {
         }
     }
 	
-    //liquidación parcial sobre el total de los gastos realizados con esa tarjeta durante el mes/año  de liquidación que consiste en lo siguiente: 
+    //liquidación parcial sobre el total de los gastos realizados con esa tarjeta durante el mes/año de liquidación que consiste en lo siguiente: 
     //los gastos totales, incluida una comisión de 12%, se dividen en 3 cuotas a pagar en los 3 meses siguientes 
-    public void liquidarPlazos (int mes, int anyo) throws Exception {
-            //TODO
+    /**
+     * Liquidación parcial sobre el total de los gastos realizados con esa tarjeta durante el mes/año de liquidación que consiste en lo siguiente: 
+     * los gastos totales, incluida una comisión de 12%, se dividen en 3 cuotas a pagar en los 3 meses siguientes
+     * 
+     * 
+     * @param mes mes del que sea desea liquidar los movimientos
+     * @param anyo año del que se desea liquidar los movimientos
+     */
+    public void liquidarPlazos (int mes, int anyo){
+        int numPlazos = 3;
+        double r = 0.0;
+        
+        //Obtener los movimientos de un determinado mes/año y marcarlos cómo liquidados
+        for (int i = 0; i < this.mMovimientos.size(); i++) {
+            Movimiento m = (Movimiento) mMovimientos.elementAt(i);
+            if (m.getFecha().getMonthValue() == mes && m.getFecha().getYear() == anyo && !m.isLiquidado())
+                r += m.getImporte();
+                m.setLiquidado(true);
+        }
+        
+        // Si se han habido movimientos ese mes, aplicar el 12% de comisión y partir la luiquidación en los 3 siguientes meses
+        if (r != 0) {
+            r *= 1.12;
+            r /= (double)numPlazos;
+            
+            for(int i=0;i<numPlazos;i++){
+                Movimiento liq = new Movimiento();
+                
+                liq.setConcepto("Liquidación de operaciones tarj. crédito, " + (mes) + " de " + (anyo));
+                liq.setImporte(-r);
+                liq.setFecha(new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusMonths(i));
+                
+                mCuentaAsociada.addMovimiento(liq);
+            }			
+        }
+    }
+    
+    /**
+     * Búsca los movimientos de un determinado mes/año
+     * 
+     * @param mes mes del que sea desea buscar los movimientos
+     * @param anyo año del que se desea buscar los movimientos
+     * @return Devuelve un Vector con los movimientos realizados en el mes/año especificado
+     */
+    public Vector<Movimiento> buscarMovimiento(int mes, int anyo){
+        Vector<Movimiento> movimientos = new Vector();
+        
+        for(Movimiento m:mMovimientos){
+            if (m.getFecha().getMonthValue() == mes && m.getFecha().getYear() == anyo){
+                movimientos.add(m);
+            }
+        }
+        
+        return movimientos;
     }
 }

@@ -85,4 +85,23 @@ public class Cuenta {
     public void addMovimiento(Movimiento m) {
         mMovimientos.addElement(m);
     }
+    
+    /**
+     * Búsca los movimientos de un determinado mes/año
+     * 
+     * @param mes mes del que sea desea buscar los movimientos
+     * @param anyo año del que se desea buscar los movimientos
+     * @return Devuelve un Vector con los movimientos realizados en el mes/año especificado
+     */
+    public Vector<Movimiento> buscarMovimiento(int mes, int anyo){
+        Vector<Movimiento> movimientos = new Vector();
+        
+        for(Movimiento m:mMovimientos){
+            if (m.getFecha().getMonthValue() == mes && m.getFecha().getYear() == anyo){
+                movimientos.add(m);
+            }
+        }
+        
+        return movimientos;
+    }
 }
