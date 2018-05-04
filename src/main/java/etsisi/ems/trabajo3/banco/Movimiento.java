@@ -9,7 +9,7 @@ public class Movimiento {
     private boolean mLiquidado;
 
     public Movimiento() {		
-        setLiquidado(false); //lo necesito para los movimientos de las tarjetas de crédito
+        mLiquidado = false; //lo necesito para los movimientos de las tarjetas de crédito
     }
 
     public double getImporte() {

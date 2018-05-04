@@ -9,34 +9,20 @@ public class Credito {
     private Cuenta mCuentaAsociada;
     private double mCredito;
     private Vector<Movimiento> mMovimientos;
-    private String mNumero, mTitular; // ### NO SE USA ###
-    private LocalDate mFechaDeCaducidad; // ### NO SE USA ###
-    private String mNombreEntidad; // ### NO SE USA ###
-    private int mCCV; // ### NO SE USA ###
     private int mMarcaInternacional; //mastercard, maestro, visa ...
     private int mTipo; //oro platino clásica
 
-    public Credito(String numero, String titular, LocalDate fechacaducidad, double credito, int marcainternacional,	String nombreentidad, int ccv) {
-        mNumero = numero;
-        mTitular = titular;
-        mFechaDeCaducidad = fechacaducidad;
+    public Credito(double credito, int marcainternacional) {
         mCredito = credito;
         mMovimientos = new Vector<Movimiento>();
         mMarcaInternacional = marcainternacional;
-        mNombreEntidad = nombreentidad;
-        mCCV = ccv;
     }
 	
-    public Credito(String numero, String titular, LocalDate fechacaducidad, int tipo, int marcainternacional, String nombreentidad, int ccv) {
-        mNumero = numero;
-        mTitular = titular;
-        mFechaDeCaducidad = fechacaducidad;
+    public Credito(int tipo, int marcainternacional) {
         mTipo = tipo;
         mCredito = calcularCredito(mTipo);
         mMovimientos = new Vector<Movimiento>();
         mMarcaInternacional = marcainternacional;
-        mNombreEntidad = nombreentidad;
-        mCCV = ccv;
     }
 	
     public double calcularCredito(int tipo) {
@@ -168,8 +154,6 @@ public class Credito {
         }
     }
 	
-    //liquidación parcial sobre el total de los gastos realizados con esa tarjeta durante el mes/año de liquidación que consiste en lo siguiente: 
-    //los gastos totales, incluida una comisión de 12%, se dividen en 3 cuotas a pagar en los 3 meses siguientes 
     /**
      * Liquidación parcial sobre el total de los gastos realizados con esa tarjeta durante el mes/año de liquidación que consiste en lo siguiente: 
      * los gastos totales, incluida una comisión de 12%, se dividen en 3 cuotas a pagar en los 3 meses siguientes

@@ -15,7 +15,7 @@ public class CuentaTest extends TestCase {
 
     @Before
     public void setUp() throws Exception {
-        cuenta = new Cuenta("0001.0002.12.1234567890", "Fulano de Tal");
+        cuenta = new Cuenta();
     }
 
     @After

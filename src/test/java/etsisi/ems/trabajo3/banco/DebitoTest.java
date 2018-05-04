@@ -20,12 +20,12 @@ public class DebitoTest extends TestCase {
 
     @Before
     public void setUp() throws Exception {
-        cuenta = new Cuenta("0001.0002.12.1234567890", "Fulano de Tal");
+        cuenta = new Cuenta();
         cuenta.ingresar(1000.0);
         Date hoy = new Date();
         LocalDate fechacaducidad = hoy.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         fechacaducidad.plusYears(4); // Caduca en 4 años
-        debito = new Debito("1234567890123456", "Fulano de Tal", fechacaducidad);
+        debito = new Debito();
         debito.setCuenta(cuenta);
     }
 

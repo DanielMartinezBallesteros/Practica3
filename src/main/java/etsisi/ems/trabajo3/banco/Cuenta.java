@@ -6,13 +6,9 @@ import java.util.Date;
 import java.util.Vector;
 
 public class Cuenta {
-    private String mNumero; // ### NO SE USA ###
-    private String mTitular; // ### NO SE USA ###
     private Vector<Movimiento> mMovimientos;
 
-    public Cuenta(String numero, String titular) {
-        mNumero = numero;
-        mTitular = titular;
+    public Cuenta() {
         mMovimientos = new Vector<Movimiento>();
     }
 
