@@ -5,8 +5,7 @@ import java.util.Vector;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
-public class Credito {
-    private Cuenta mCuentaAsociada;
+public class Credito extends Tarjeta{
     private double mCredito;
     private Vector<Movimiento> mMovimientos;
     private int mMarcaInternacional; //mastercard, maestro, visa ...
@@ -45,10 +44,7 @@ public class Credito {
         return credito;
     }
 
-    public void setCuenta(Cuenta c) {
-        mCuentaAsociada = c;
-    }
-
+    @Override
     public void retirar(double x) throws Exception {	
         double comisiontarifa;
         
@@ -76,49 +72,29 @@ public class Credito {
             if (x > getCreditoDisponible())
                 throw new Exception("Crédito insuficiente");
             
-            Movimiento m = new Movimiento();
-            m.setConcepto("Retirada en cuenta asociada (cajero automático)");
-            m.setImporte(x + comision);
-            Date date = new Date();
-            LocalDate fecha = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            m.setFecha(fecha);
-            mMovimientos.addElement(m);
+            mMovimientos.addElement(Movimiento.realizarMovimiento("Retirada en cuenta asociada (cajero automático)", x + comision));
 	}
 
     //traspaso tarjeta a cuenta
+    @Override
     public void ingresar(double x) throws Exception {
-        // Movimiento m=new Movimiento();
-        // m.setConcepto("Ingreso en cuenta asociada (cajero automático)");
-        // m.setImporte(x);
-        // mMovimientos.addElement(m);
-
         double comision = (x * 0.05 < 3.0 ? 3 : x * 0.05); // Añadimos una comisión de un 5%, mínimo de 3 euros.		
         
         if (x > getCreditoDisponible())
             throw new Exception("Crédito insuficiente");
         
-        Movimiento m = new Movimiento();
-        m.setConcepto("Traspaso desde tarjeta a cuenta");
-        m.setImporte(x);
-        Date date = new Date();
-        LocalDate fecha = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        m.setFecha(fecha);
-        mMovimientos.addElement(m);
+        mMovimientos.addElement(Movimiento.realizarMovimiento("Traspaso desde tarjeta a cuenta", x));
 
         mCuentaAsociada.ingresar("Traspaso desde tarjeta a cuenta", x);
         mCuentaAsociada.retirar("Comision Traspaso desde tarjeta a cuenta", comision);
     }
 
+    @Override
     public void pagoEnEstablecimiento(String datos, double x) throws Exception {
-        Movimiento m = new Movimiento();
-        m.setConcepto("Compra a crédito en: " + datos);
-        m.setImporte(x);
-        Date date = new Date();
-        LocalDate fecha = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        m.setFecha(fecha);
-        mMovimientos.addElement(m);
+        mMovimientos.addElement(Movimiento.realizarMovimiento("Compra a crédito en: " + datos, x));
     }
 
+    @Override
     public double getSaldo() {
         double r = 0.0;
         

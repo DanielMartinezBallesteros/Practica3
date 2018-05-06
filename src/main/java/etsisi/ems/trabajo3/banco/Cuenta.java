@@ -1,8 +1,5 @@
 package etsisi.ems.trabajo3.banco;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.Vector;
 
 public class Cuenta {
@@ -16,13 +13,7 @@ public class Cuenta {
         if (x <= 0)
             throw new Exception("No se puede ingresar una cantidad negativa");
         
-        Movimiento m = new Movimiento();
-        m.setConcepto("Ingreso en efectivo");
-        m.setImporte(x);
-        Date date = new Date();
-        LocalDate fecha = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        m.setFecha(fecha);
-        this.mMovimientos.addElement(m);
+        this.mMovimientos.addElement(Movimiento.realizarMovimiento("Ingreso en efectivo", x));
     }
 
     public void retirar(double x) throws Exception {
@@ -32,26 +23,14 @@ public class Cuenta {
         if (getSaldo() < x)
             throw new Exception("Saldo insuficiente");
         
-        Movimiento m = new Movimiento();
-        m.setConcepto("Retirada de efectivo");
-        m.setImporte(-x);
-        Date date = new Date();
-        LocalDate fecha = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        m.setFecha(fecha);
-        this.mMovimientos.addElement(m);
+        this.mMovimientos.addElement(Movimiento.realizarMovimiento("Retirada de efectivo", -x));
     }
 
     public void ingresar(String concepto, double x) throws Exception {
         if (x <= 0)
             throw new Exception("No se puede ingresar una cantidad negativa");
-        
-        Movimiento m = new Movimiento();
-        m.setConcepto(concepto);
-        m.setImporte(x);
-        Date date = new Date();
-        LocalDate fecha = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        m.setFecha(fecha);
-        this.mMovimientos.addElement(m);
+
+        this.mMovimientos.addElement(Movimiento.realizarMovimiento(concepto, x));
     }
 
     public void retirar(String concepto, double x) throws Exception {
@@ -60,13 +39,7 @@ public class Cuenta {
         if (getSaldo() < x)
             throw new Exception("Saldo insuficiente");
         
-        Movimiento m = new Movimiento();
-        m.setConcepto(concepto);
-        m.setImporte(-x);
-        Date date = new Date();
-        LocalDate fecha = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        m.setFecha(fecha);
-        this.mMovimientos.addElement(m);
+        this.mMovimientos.addElement(Movimiento.realizarMovimiento(concepto, -x));
     }
 
     public double getSaldo() {

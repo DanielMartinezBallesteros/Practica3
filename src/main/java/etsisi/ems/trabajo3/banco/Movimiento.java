@@ -1,6 +1,8 @@
 package etsisi.ems.trabajo3.banco;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 public class Movimiento {
     private String mConcepto;
@@ -42,5 +44,15 @@ public class Movimiento {
 
     public void setLiquidado(boolean mliquidado) {
         this.mLiquidado = mliquidado;
+    }
+    
+    public static Movimiento realizarMovimiento(String concepto, double importe){
+        Movimiento m = new Movimiento();
+        
+        m.setConcepto(concepto);
+        m.setImporte(importe);
+        m.setFecha(new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        
+        return m;
     }
 }
